@@ -42,8 +42,7 @@ export const addFriend = async (token=null, friendUserId) => {
         friendUserId: friendUserId
     
     };
-    // console.log("this is PAYLOAD", payload);
-    // console.log("this is frienduserID", payload.friendUserId);
+
     const requestOptions = {
         method: "POST",
         headers: {
