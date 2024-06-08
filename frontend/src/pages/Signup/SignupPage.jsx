@@ -48,6 +48,7 @@ export const SignupPage = () => {
           (error) => error !== "Password must be at least 8 characters."
         );
       }
+      //test method of a regular expression checks if there's at least one match of the pattern in the argument given
       if (capitalLetterRegex.test(password)) {
         updatedErrors = updatedErrors.filter(
           (error) => error !== "Password must have at least one capital letter."
@@ -64,12 +65,10 @@ export const SignupPage = () => {
       }));
     };
   
-    validatePassword();
+    validatePassword(); //call function explicitly to execute
 
   }, [password]);
   
-
-
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
@@ -89,11 +88,11 @@ export const SignupPage = () => {
         <input
           id="forename"
           type="text"
-          value={forename}
+          value={forename} //creates a controlled input component, no longer managed by browser's DOM
           autoComplete="off"
           onChange={(event) => setForename(event.target.value)}
         />
-        <br />
+
         <label htmlFor="surname">Surname:</label>
         <input
           id="surname"
@@ -102,7 +101,6 @@ export const SignupPage = () => {
           autoComplete="off"
           onChange={(event) => setSurname(event.target.value)}
         />
-        <br />
         <label htmlFor="username">Username:</label>
         <input
           id="username"
@@ -111,7 +109,6 @@ export const SignupPage = () => {
           autoComplete="off"
           onChange={(event) => setUsername(event.target.value)}
         />
-        <br />
         <label htmlFor="email">Email:</label>
         <input
           id="email"
@@ -120,7 +117,6 @@ export const SignupPage = () => {
           autoComplete="off"
           onChange={handleEmailChange}
         />
-        <br />
         <label htmlFor="password">Password:</label>
         <input
           placeholder="Password"
@@ -129,10 +125,8 @@ export const SignupPage = () => {
           value={password}
           onChange={handlePasswordChange}
           />
-          {/* {errors.password && <p>{errors.password}</p>}
-          <br /> */}
 
-{errors.password.length > 0 && (
+      {errors.password.length > 0 && (
         <ul>
           {errors.password.map((error, index) => (
             <li key={index}>{error}</li>
@@ -140,7 +134,7 @@ export const SignupPage = () => {
         </ul>
       )}
 
-        <input className="login-button" role="submit-button" id="submit" type="submit" value="Submit" />
+      <input className="login-button" role="submit-button" id="submit" type="submit" value="Submit" />
       </form>
       <div>
       <span>Already have an account? <a className="hyperlink" href="/login">Log in</a></span>
