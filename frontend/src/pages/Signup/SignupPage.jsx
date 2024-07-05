@@ -20,8 +20,9 @@ export const SignupPage = () => {
 });
 
   const handleSubmit = async (event) => {
+    alert("pressed!")
     event.preventDefault();
-    if (!errors.password){
+    if (errors.password.length === 0){
     try {
       await signup(forename, surname, username, email, password);
       console.log("redirecting...:");
