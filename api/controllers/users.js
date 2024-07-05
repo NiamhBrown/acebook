@@ -134,6 +134,7 @@ const updateUser = async (req, res) => {
     const user = await User.findByIdAndUpdate(userId, updateData, {
       new: true,
     });
+    console.log("_________this is backen user:", user);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
