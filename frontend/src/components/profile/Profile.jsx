@@ -79,16 +79,6 @@ export const Profile = () => {
     }
   };
 
-  //   const handleSave = async (updatedData) => {
-  //     try {
-  //       const token = localStorage.getItem("token");
-  //       const updatedUser = await updateUserProfile(updatedData, token);
-  //       setUser(updatedUser);
-  //       setShowModal(false);
-  //     } catch (error) {
-  //       console.error("Error updating user profile:", error);
-  //     }
-  //   };
   return token ? (
     <>
       <Navbar />

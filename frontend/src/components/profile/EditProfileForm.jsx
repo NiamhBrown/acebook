@@ -60,7 +60,6 @@ const EditProfileForm = ({ user, onSave, onClose, token }) => {
         <label>
           Gender:
           <select
-            // type="email"
             name="gender"
             value={formData.gender}
             onChange={handleChange}
