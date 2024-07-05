@@ -36,11 +36,31 @@ const data = await response.json();
 return data;
 };
 
+export const updateUser = async (updatedUser, token) => {
+      const payload = {
+        updatedUser: updatedUser,
+        token: token,
+      };  
+
+  const requestOptions = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(payload),
+  };
+
+  let response = await fetch(`${BACKEND_URL}/users/profile`,requestOptions);
+
+};
+
+
+
 export const addFriend = async (token=null, friendUserId) => {
     const payload = {
         token: token,
         friendUserId: friendUserId
-    
     };
 
     const requestOptions = {
