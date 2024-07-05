@@ -6,7 +6,6 @@ import { updateUser } from "../../services/users";
 import Post from "../Post/Post";
 import ProfilePicture from "../ProfilePicture/ProfilePicture";
 import Navbar from "../../components/navbar/navbar";
-import ProfilePictureUpload from "../ProfilePicture/ProfilePictureUpload";
 import { getOneUser } from "../../services/users";
 import FriendsPage from "../../pages/Friend/FriendsPage";
 import EditProfileForm from "./EditProfileForm";
@@ -17,10 +16,15 @@ export const Profile = () => {
   const [posts, setPosts] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [token, setToken] = useState(localStorage.getItem("token"));
-  const [signedInUser, setSignedInUser] = useState({
-    forename: "loading",
-    username: "loading",
-  });
+  const [signedInUser, setSignedInUser] = useState(
+    []
+
+    //  NOT SURE WHY NEEDED?
+    // {
+    //   forename: "loading",
+    //   username: "loading",
+    // }
+  );
 
   useEffect(() => {
     if (token) {
@@ -43,7 +47,9 @@ export const Profile = () => {
     if (token) {
       getOneUser(token)
         .then((data) => {
+          console.log("HEEEY-data.user[0]", data.user[0]);
           setSignedInUser(data.user[0]);
+
           localStorage.setItem("token", data.token);
         })
         .catch((err) => {
@@ -64,48 +70,43 @@ export const Profile = () => {
     try {
       console.log("User updated:", updatedUser);
       const token = localStorage.getItem("token");
-      await updateUser(updatedUser, token);
+      const updatedUserData = await updateUser(updatedUser, token);
+      console.log("[[[[[[[[[[FRONT END updatedUserData:", updatedUserData);
+      setSignedInUser(updatedUserData);
       closeModal();
     } catch (error) {
       console.error("Error updating user:", error);
     }
   };
 
-  //   const handleSave = async (updatedData) => {
-  //     try {
-  //       const token = localStorage.getItem("token");
-  //       const updatedUser = await updateUserProfile(updatedData, token);
-  //       setUser(updatedUser);
-  //       setShowModal(false);
-  //     } catch (error) {
-  //       console.error("Error updating user profile:", error);
-  //     }
-  //   };
   return token ? (
     <>
       <Navbar />
       <main className="profile-main">
-        <div className="modal">
-          <button onClick={openModal}>Edit Profile</button>
-          <Modal
-            isOpen={modalIsOpen}
-            onRequestClose={closeModal}
-            contentLabel="Edit Profile"
-          >
-            <h2>Edit Profile</h2>
-            <EditProfileForm
-              user={signedInUser}
-              onSave={handleSave}
-              onClose={closeModal}
-            />
-          </Modal>
-        </div>
         <div className="profile-header">
           <ProfilePicture userId={userId} />
-          <ProfilePictureUpload token={token} />
+          <div className="modal">
+            <button onClick={openModal}>Edit Profile</button>
+            <Modal
+              isOpen={modalIsOpen}
+              onRequestClose={closeModal}
+              contentLabel="Edit Profile"
+            >
+              <h2>Edit Profile</h2>
+              <EditProfileForm
+                user={signedInUser}
+                onSave={handleSave}
+                onClose={closeModal}
+                token={token}
+              />
+            </Modal>
+          </div>
+
           <h1>
             {signedInUser.forename} {signedInUser.surname}
           </h1>
+          <p>Gender: {signedInUser.gender}</p>
+          <p>Location: {signedInUser.location}</p>
         </div>
         <h2 className="post-heading">Posts</h2>
         <div className="profile-container" role="profile">
